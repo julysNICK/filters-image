@@ -110,7 +110,8 @@
       "type": "openCV",
       "typeFunction": "extracao"
     }
-  }, 
+  },
+  {
     "name": "Fechamento",
     "value": {
       "type": "newPureFunctions",
@@ -125,11 +126,10 @@
     }
   },
   {
-    "name":"Deteção de bordas",
-    "value":{
-      "type":"newPureFunctions",
-      "typeFunction":"detectionBorders"
+    "name": "Deteção de bordas",
+    "value": {
+      "type": "newPureFunctions",
+      "typeFunction": "detectionBorders"
     }
   }
-
 ]

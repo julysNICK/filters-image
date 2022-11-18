@@ -15,7 +15,7 @@ import {
   localHistogramFilter,
   logarimitFilter,
   medianSmoothingFilter,
-  negativergb,potenciaFilter
+  negativergb, potenciaFilter
 } from "./functions/filters/index.js";
 import { erosion } from "./functions/morfologico/erosion.js";
 import { dilation } from "./functions/morfologico/dilation.js";
@@ -28,7 +28,7 @@ import { detectionBorders } from "./functions/segmentation/detectionBorders.js";
 const canvas = document.getElementById("canvas");
 const canvas2 = document.getElementById("canvas2");
 const context = canvas.getContext("2d");
-const context2 = canvas2.getContext("2d",{willReadFrequently:true});
+const context2 = canvas2.getContext("2d", { willReadFrequently: true });
 
 let width = canvas.width;
 let height = canvas.height;
@@ -38,20 +38,20 @@ function templateFilterImageByPureFunctions({
   filterFunctionOptions,
 }) {
   const canvasColor = context.getImageData(0, 0, width, height);
-  
+
   context2.putImageData(canvasColor, 0, 0);
-  if(filterFunctionOptions.notPutImage){
+  if (filterFunctionOptions.notPutImage) {
     let dst = new cv.Mat();
     let src = cv.imread("canvas");
-  
+
     cv.cvtColor(src, dst, cv.COLOR_BGR2GRAY);
-    cv.threshold(dst, dst,127,255, cv.THRESH_BINARY)
+    cv.threshold(dst, dst, 127, 255, cv.THRESH_BINARY)
     cv.imshow("canvas2", dst);
   }
 
   const canvasColor2 = context2.getImageData(0, 0, width, height);
   filterFunction({
-    canvas:context2,
+    canvas: context2,
     data: canvasColor2.data,
     ...filterFunctionOptions,
     width,
@@ -62,28 +62,28 @@ function templateFilterImageByPureFunctions({
 
 function templateFilterImageByPureFunctionsWithDrawCanvas({
   filterFunction,
-  filterFunctionOptions,}){
-    const canvasColor = context.getImageData(0, 0, width, height);
-  
-    context2.putImageData(canvasColor, 0, 0);
-    let dst = new cv.Mat();
-    let src = cv.imread("canvas");
-  
-    cv.cvtColor(src, dst, cv.COLOR_BGR2GRAY);
-    if(!filterFunctionOptions.notBinary){
-      cv.threshold(dst, dst,127,255, cv.THRESH_BINARY)
+  filterFunctionOptions, }) {
+  const canvasColor = context.getImageData(0, 0, width, height);
 
-    }
-    cv.imshow("canvas2", dst);
-  
-    const canvasColor2 = context2.getImageData(0, 0, width, height);
-    filterFunction({
-      canvas:context2,
-      data: canvasColor2.data,
-      ...filterFunctionOptions,
-      width,
-      height,
-    });
+  context2.putImageData(canvasColor, 0, 0);
+  let dst = new cv.Mat();
+  let src = cv.imread("canvas");
+
+  cv.cvtColor(src, dst, cv.COLOR_BGR2GRAY);
+  if (!filterFunctionOptions.notBinary) {
+    cv.threshold(dst, dst, 127, 255, cv.THRESH_BINARY)
+
+  }
+  cv.imshow("canvas2", dst);
+
+  const canvasColor2 = context2.getImageData(0, 0, width, height);
+  filterFunction({
+    canvas: context2,
+    data: canvasColor2.data,
+    ...filterFunctionOptions,
+    width,
+    height,
+  });
 }
 
 const filtersPureFunctions = {
@@ -136,28 +136,28 @@ const filtersPureFunctions = {
   averageSmoothing: {
     filterFunction: averageSmoothingFilter,
   },
-  erosion:{
-    filterFunction:erosion,
+  erosion: {
+    filterFunction: erosion,
 
   },
-  dilation:{
-    filterFunction:dilation,
+  dilation: {
+    filterFunction: dilation,
 
   },
-  abertura:{
-    filterFunction:abertura,
+  abertura: {
+    filterFunction: abertura,
 
   },
-  closing:{
-    filterFunction:closing,
+  closing: {
+    filterFunction: closing,
   },
-  hitOrMissTransformation:{
-    filterFunction:hitOrMissTransformation
+  hitOrMissTransformation: {
+    filterFunction: hitOrMissTransformation
   },
-  detectionBorders:{
-    filterFunction:detectionBorders,
-    filterFunctionOptions:{
-      notBinary:true
+  detectionBorders: {
+    filterFunction: detectionBorders,
+    filterFunctionOptions: {
+      notBinary: true
     }
   }
 };
@@ -189,7 +189,7 @@ const filter = {
       canvasShow: "canvas2",
     });
   },
-  newPureFunctions:({type})=>{
+  newPureFunctions: ({ type }) => {
     templateFilterImageByPureFunctionsWithDrawCanvas(filtersPureFunctions[type])
   }
 };
